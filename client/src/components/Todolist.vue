@@ -6,9 +6,11 @@
       <button>+</button>
     </div>
     <ul>
-      <li><input type="checkbox" :checked="tasks[0].isDone"><span>{{tasks[0].title}}</span><button>x</button></li>
-      <li><input type="checkbox" :checked="tasks[1].isDone"><span>{{tasks[1].title}}</span><button>x</button></li>
-      <li><input type="checkbox" :checked="tasks[2].isDone"><span>{{tasks[2].title}}</span><button>x</button></li>
+      <li v-for="(task) in tasks" :key="task.id">
+        <input type="checkbox" :checked="task.isDone">
+        <span>{{task.title}}</span>
+        <button @click="removeTaskHandler(task.id)">✖️</button>
+      </li>
     </ul>
     <button>All</button>
     <button>Active</button>
@@ -20,15 +22,31 @@
 /* eslint-disable */
 
 export default {
-
   name: "Todolist",
   props: {
-    title: String,
-    tasks: {
-      id: Number,
-      title: String,
-      isDone: Boolean
+    title: {
+      type: String,
+      required: true
     },
+    tasks: {
+      id: {
+        type: Number,
+        required: true
+      },
+      title: {
+        type: String,
+        required: true
+      },
+      isDone: {
+        type:Boolean,
+        required: true
+      }
+    },
+  },
+  methods: {
+    removeTaskHandler(taskId) {
+      this.$emit('removeTask', taskId)
+    }
   }
 }
 </script>

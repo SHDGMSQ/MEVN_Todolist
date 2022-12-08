@@ -1,7 +1,10 @@
 <template>
   <div class="app">
-    <Todolist title="What to learn" v-bind:tasks="tasks1"/>
-    <Todolist title="What to buy" v-bind:tasks="tasks2"/>
+    <Todolist
+        title="What to learn"
+        :tasks="tasks"
+        @removeTask=removeTask
+    />
   </div>
 </template>
 
@@ -13,17 +16,18 @@ export default {
   components: {Todolist},
   data(){
     return {
-      tasks1: [
+      tasks: [
         {id: 1, title: 'HTML&CSS', isDone: true},
         {id: 2, title: 'VUE', isDone: false},
         {id: 3, title: 'NODE', isDone: false},
-      ],
-      tasks2: [
-        {id: 1, title: 'HELLO', isDone: true},
-        {id: 1, title: 'WORLD', isDone: false},
-        {id: 1, title: 'YO', isDone: true},
+        {id: 4, title: 'MongoDB', isDone: false},
       ],
     }
+  },
+  methods: {
+    removeTask(taskId){
+      this.tasks = this.tasks.filter( el => el.id !== taskId )
+    },
   }
 }
 </script>
